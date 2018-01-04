@@ -1,0 +1,14 @@
+#works, but has some weird extra cells - it's because there ARE extra cells 
+#!/bin/sh
+
+tmp=(*.csv)
+awk -F"," '{print $1}' ${tmp[0]} | paste -s -d"," - > test.csv
+
+filename=test.csv
+for i in $(ls *.csv | grep --invert-match "${filename}"); do
+	awk -F","  '{print $3}' $i | paste -s -d"," - >> test.csv
+	#sed 's/" "/,/' test1.csv >> testsed.csv
+	#>> test1.csv
+	#| sed 's/" "/,/' >> test.csv
+	#>> result.csv
+done
